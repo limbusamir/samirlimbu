@@ -22,12 +22,12 @@
     --accent-dim:#1a8f6f;
     --accent-glow:rgba(45,212,167,0.35);
     --warning:#f0b429;
+    --blue:#4f9df2;
     --mono:'JetBrains Mono', monospace;
     --sans:'Inter', sans-serif;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
-
 html{scroll-behavior:smooth;}
 
 body{
@@ -42,17 +42,11 @@ body{
     background-size:48px 48px;
 }
 
-.container{
-    width:90%;
-    max-width:1100px;
-    margin:auto;
-}
+.container{width:90%;max-width:1100px;margin:auto;}
 
 /* ---------- STATUS BAR ---------- */
 .statusbar{
-    position:fixed;
-    top:0;left:0;right:0;
-    z-index:100;
+    position:fixed;top:0;left:0;right:0;z-index:100;
     background:rgba(10,14,19,0.85);
     backdrop-filter:blur(10px);
     border-bottom:1px solid var(--border);
@@ -60,32 +54,16 @@ body{
     font-family:var(--mono);
     font-size:0.78rem;
 }
-.statusbar .container{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:8px;
-}
+.statusbar .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
 .status-left{display:flex;align-items:center;gap:8px;color:var(--text-secondary);}
-.dot{
-    width:8px;height:8px;border-radius:50%;
-    background:var(--accent);
-    box-shadow:0 0 8px var(--accent-glow);
-    animation:pulse 2s ease-in-out infinite;
-}
-@keyframes pulse{
-    0%,100%{opacity:1;transform:scale(1);}
-    50%{opacity:0.5;transform:scale(0.85);}
-}
-.status-right{color:var(--text-dim);letter-spacing:0.5px;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent-glow);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.85);}}
+.status-right{color:var(--text-dim);letter-spacing:0.5px;display:flex;gap:18px;}
 .status-right span{color:var(--accent);}
+@media(max-width:640px){.status-right{display:none;}}
 
 /* ---------- HERO / TERMINAL ---------- */
-.hero{
-    padding:170px 0 100px;
-    position:relative;
-}
+.hero{padding:170px 0 90px;position:relative;}
 .terminal{
     background:var(--bg-elevated);
     border:1px solid var(--border);
@@ -95,308 +73,171 @@ body{
     opacity:0;
     animation:fadeUp 0.8s ease forwards 0.1s;
 }
-.terminal-bar{
-    background:#0f161e;
-    padding:12px 16px;
-    display:flex;
-    align-items:center;
-    gap:8px;
-    border-bottom:1px solid var(--border);
-}
+.terminal-bar{background:#0f161e;padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);}
 .tdot{width:11px;height:11px;border-radius:50%;}
 .tdot.red{background:#ff5f56;}
 .tdot.yellow{background:#ffbd2e;}
 .tdot.green{background:#27c93f;}
-.terminal-title{
-    margin-left:8px;
-    font-family:var(--mono);
-    font-size:0.75rem;
-    color:var(--text-dim);
-}
-.terminal-body{
-    padding:32px 28px 40px;
-    font-family:var(--mono);
-    font-size:0.95rem;
-}
+.terminal-title{margin-left:8px;font-family:var(--mono);font-size:0.75rem;color:var(--text-dim);}
+.terminal-body{padding:30px 28px 40px;font-family:var(--mono);font-size:0.88rem;}
+.motd{color:var(--text-dim);white-space:pre-wrap;font-size:0.8rem;margin-bottom:18px;opacity:0;animation:fadeUp 0.6s ease forwards 0.4s;}
+.motd .hl{color:var(--text-secondary);}
+.motd .ok{color:var(--accent);}
 .terminal-body .line{color:var(--text-secondary);margin-bottom:6px;}
 .terminal-body .prompt{color:var(--accent);}
-.terminal-body .out{color:var(--text-dim);margin-bottom:18px;}
 
 .hero-name{
-    font-family:var(--mono);
-    font-size:clamp(2.2rem, 6vw, 3.6rem);
-    font-weight:800;
-    color:var(--text-primary);
-    margin:14px 0 6px;
-    letter-spacing:-1px;
-    opacity:0;
+    font-family:var(--mono);font-size:clamp(2.1rem, 6vw, 3.4rem);font-weight:800;
+    color:var(--text-primary);margin:14px 0 6px;letter-spacing:-1px;opacity:0;
 }
 .hero-name.show{opacity:1;animation:fadeUp 0.6s ease forwards;}
-
 .hero-roles{margin-top:10px;}
-.hero-roles .line{
-    font-size:0.92rem;
-    color:var(--text-secondary);
-    opacity:0;
-}
-.cursor{
-    display:inline-block;
-    width:9px;height:1.1em;
-    background:var(--accent);
-    vertical-align:text-bottom;
-    animation:blink 1s step-end infinite;
-    margin-left:2px;
-}
+.hero-roles .line{font-size:0.92rem;color:var(--text-secondary);opacity:0;}
+.cursor{display:inline-block;width:9px;height:1.1em;background:var(--accent);vertical-align:text-bottom;animation:blink 1s step-end infinite;margin-left:2px;}
 @keyframes blink{50%{opacity:0;}}
-@keyframes fadeUp{
-    from{opacity:0;transform:translateY(14px);}
-    to{opacity:1;transform:translateY(0);}
-}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
 
-.hero-cta{
-    margin-top:36px;
-    display:flex;
-    gap:14px;
-    flex-wrap:wrap;
-}
+.hero-cta{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;}
 .btn{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:13px 26px;
-    background:var(--accent);
-    color:#04140f;
-    text-decoration:none;
-    border-radius:6px;
-    font-family:var(--mono);
-    font-weight:700;
-    font-size:0.85rem;
-    letter-spacing:0.3px;
-    transition:transform 0.2s ease, box-shadow 0.2s ease;
+    display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:var(--accent);
+    color:#04140f;text-decoration:none;border-radius:6px;font-family:var(--mono);font-weight:700;
+    font-size:0.85rem;letter-spacing:0.3px;transition:transform 0.2s ease, box-shadow 0.2s ease;
 }
-.btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 8px 24px var(--accent-glow);
-}
-.btn.ghost{
-    background:transparent;
-    color:var(--text-secondary);
-    border:1px solid var(--border);
-}
-.btn.ghost:hover{
-    color:var(--text-primary);
-    border-color:var(--border-hover);
-    box-shadow:none;
-}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--accent-glow);}
+.btn.ghost{background:transparent;color:var(--text-secondary);border:1px solid var(--border);}
+.btn.ghost:hover{color:var(--text-primary);border-color:var(--border-hover);box-shadow:none;}
 
 /* ---------- SECTIONS ---------- */
-section{padding:60px 0;}
+section{padding:56px 0;}
 .section-tag{
-    font-family:var(--mono);
-    font-size:0.78rem;
-    color:var(--accent);
-    text-transform:uppercase;
-    letter-spacing:2px;
-    margin-bottom:10px;
-    display:flex;
-    align-items:center;
-    gap:10px;
+    font-family:var(--mono);font-size:0.78rem;color:var(--accent);text-transform:uppercase;
+    letter-spacing:2px;margin-bottom:10px;display:flex;align-items:center;gap:10px;
 }
-.section-tag::before{
-    content:'';
-    width:24px;height:1px;
-    background:var(--accent-dim);
-}
-.section-title{
-    font-family:var(--mono);
-    font-size:1.9rem;
-    font-weight:700;
-    margin-bottom:30px;
-    color:var(--text-primary);
-}
+.section-tag::before{content:'';width:24px;height:1px;background:var(--accent-dim);}
+.section-title{font-family:var(--mono);font-size:1.85rem;font-weight:700;margin-bottom:28px;color:var(--text-primary);}
+.section-sub{font-family:var(--mono);font-size:0.78rem;color:var(--text-dim);margin:-18px 0 22px;}
 
-.reveal{
-    opacity:0;
-    transform:translateY(24px);
-    transition:opacity 0.7s ease, transform 0.7s ease;
-}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease, transform 0.7s ease;}
 .reveal.in{opacity:1;transform:translateY(0);}
 
 .card{
-    background:var(--bg-card);
-    border:1px solid var(--border);
-    padding:30px;
-    border-radius:10px;
+    background:var(--bg-card);border:1px solid var(--border);padding:30px;border-radius:10px;
     transition:border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
-.card:hover{
-    border-color:var(--border-hover);
-    transform:translateY(-3px);
-    box-shadow:0 12px 30px rgba(0,0,0,0.35);
-}
+.card:hover{border-color:var(--border-hover);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,0.35);}
 .card p{color:var(--text-secondary);}
 .card p + p{margin-top:14px;}
 .card strong{color:var(--text-primary);}
 
-/* ---------- SKILLS ---------- */
-.skills{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(210px,1fr));
-    gap:12px;
+/* ---------- INFRA TOPOLOGY (signature) ---------- */
+.topology-wrap{
+    background:var(--bg-card);border:1px solid var(--border);border-radius:10px;
+    padding:20px 10px 6px;overflow:hidden;
 }
-.skill{
-    background:var(--bg-card);
-    border:1px solid var(--border);
-    padding:14px 16px;
-    border-radius:6px;
-    font-family:var(--mono);
-    font-size:0.82rem;
-    color:var(--text-secondary);
-    display:flex;
-    align-items:center;
-    gap:10px;
-    transition:border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+.topology-wrap svg{width:100%;height:auto;display:block;}
+.topo-node-label{font-family:var(--mono);font-size:11px;fill:var(--text-secondary);}
+.topo-node-sub{font-family:var(--mono);font-size:8.5px;fill:var(--text-dim);}
+.topo-line{stroke:var(--border-hover);stroke-width:1.4;fill:none;}
+.topo-pulse{fill:var(--accent);filter:drop-shadow(0 0 4px var(--accent-glow));}
+.topo-node-circle{fill:var(--bg-elevated);stroke:var(--accent-dim);stroke-width:1.5;transition:stroke 0.3s ease;}
+.topo-node:hover .topo-node-circle{stroke:var(--accent);}
+.topo-node:hover .topo-node-label{fill:var(--text-primary);}
+.topo-center circle{fill:var(--bg-elevated);stroke:var(--accent);stroke-width:2;}
+
+/* ---------- SKILLS: systemctl table ---------- */
+.svc-table{
+    background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;
+    font-family:var(--mono);font-size:0.82rem;
 }
-.skill::before{
-    content:'';
-    width:7px;height:7px;
-    border-radius:50%;
-    background:var(--accent-dim);
-    flex-shrink:0;
-    transition:background 0.25s ease, box-shadow 0.25s ease;
+.svc-head{
+    display:grid;grid-template-columns:1fr 140px;padding:14px 22px;
+    color:var(--text-dim);font-size:0.72rem;letter-spacing:1.5px;text-transform:uppercase;
+    border-bottom:1px solid var(--border);
 }
-.skill:hover{
-    border-color:var(--accent-dim);
-    color:var(--text-primary);
-    transform:translateX(4px);
+.svc-row{
+    display:grid;grid-template-columns:1fr 140px;align-items:center;padding:13px 22px;
+    border-bottom:1px solid var(--border);color:var(--text-secondary);
+    transition:background 0.2s ease, color 0.2s ease;
 }
-.skill:hover::before{
-    background:var(--accent);
-    box-shadow:0 0 8px var(--accent-glow);
-}
+.svc-row:last-child{border-bottom:none;}
+.svc-row:hover{background:rgba(45,212,167,0.04);color:var(--text-primary);}
+.svc-row .unit::before{content:'● ';color:var(--accent-dim);transition:color 0.2s ease;}
+.svc-row:hover .unit::before{color:var(--accent);}
+.svc-status{color:var(--accent);font-size:0.76rem;}
+.svc-status::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:6px;box-shadow:0 0 6px var(--accent-glow);}
 
 /* ---------- CERTIFICATIONS ---------- */
-.cert-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:20px;
-}
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
 .cert{
-    background:var(--bg-card);
-    border:1px solid var(--border);
-    border-radius:10px;
-    padding:26px;
-    position:relative;
-    overflow:hidden;
-    transition:border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:26px;
+    position:relative;overflow:hidden;transition:border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 .cert::before{
-    content:'';
-    position:absolute;
-    top:0;left:0;right:0;
-    height:2px;
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
     background:linear-gradient(90deg, var(--accent), transparent);
-    transform:scaleX(0);
-    transform-origin:left;
-    transition:transform 0.4s ease;
+    transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease;
 }
-.cert:hover{
-    border-color:var(--border-hover);
-    transform:translateY(-4px);
-    box-shadow:0 16px 36px rgba(0,0,0,0.4);
-}
+.cert:hover{border-color:var(--border-hover);transform:translateY(-4px);box-shadow:0 16px 36px rgba(0,0,0,0.4);}
 .cert:hover::before{transform:scaleX(1);}
 .cert-badge{
-    font-family:var(--mono);
-    font-size:0.68rem;
-    color:var(--warning);
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    margin-bottom:10px;
-    display:block;
+    font-family:var(--mono);font-size:0.68rem;color:var(--warning);letter-spacing:1.5px;
+    text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px;
 }
-.cert h3{
-    font-size:1.05rem;
-    color:var(--text-primary);
-    margin-bottom:6px;
-}
+.cert-badge::before{content:'✓';color:var(--accent);}
+.cert h3{font-size:1.05rem;color:var(--text-primary);margin-bottom:6px;}
 .cert p{color:var(--text-dim);font-size:0.88rem;}
 
-/* ---------- FOCUS LIST ---------- */
-.focus-list{
-    list-style:none;
-    background:var(--bg-card);
-    border:1px solid var(--border);
-    border-radius:10px;
-    overflow:hidden;
+/* ---------- FOCUS: ps aux table ---------- */
+.ps-table{
+    background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow-x:auto;
+    font-family:var(--mono);font-size:0.78rem;
 }
-.focus-list li{
-    display:flex;
-    align-items:center;
-    gap:16px;
-    padding:18px 26px;
-    border-bottom:1px solid var(--border);
-    font-family:var(--mono);
-    font-size:0.9rem;
-    color:var(--text-secondary);
-    opacity:0;
-    transform:translateX(-16px);
-    transition:opacity 0.5s ease, transform 0.5s ease, background 0.25s ease, color 0.25s ease;
+.ps-table table{width:100%;border-collapse:collapse;min-width:560px;}
+.ps-table th{
+    text-align:left;padding:14px 18px;color:var(--text-dim);font-size:0.7rem;
+    letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid var(--border);
 }
-.focus-list.in li{opacity:1;transform:translateX(0);}
-.focus-list li:last-child{border-bottom:none;}
-.focus-list li:hover{background:rgba(45,212,167,0.04);color:var(--text-primary);}
-.focus-list li::before{
-    content:'✓';
-    color:var(--accent);
-    font-weight:700;
-    flex-shrink:0;
-}
+.ps-table td{padding:12px 18px;border-bottom:1px solid var(--border);color:var(--text-secondary);white-space:nowrap;}
+.ps-table tr:last-child td{border-bottom:none;}
+.ps-table tbody tr{opacity:0;transform:translateX(-14px);transition:opacity 0.5s ease, transform 0.5s ease, background 0.2s ease;}
+.ps-table.in tbody tr{opacity:1;transform:translateX(0);}
+.ps-table tbody tr:hover{background:rgba(45,212,167,0.04);}
+.ps-state{color:var(--accent);}
+.ps-cmd{color:var(--text-primary);white-space:normal;}
+.ps-pid{color:var(--text-dim);}
 
-/* ---------- CONTACT ---------- */
-.contact-card{
-    background:var(--bg-card);
-    border:1px solid var(--border);
-    border-radius:10px;
-    padding:0;
-    overflow:hidden;
+/* ---------- CONTACT: ssh config ---------- */
+.sshconfig{
+    background:var(--bg-card);border:1px solid var(--border);border-radius:10px;
+    font-family:var(--mono);font-size:0.85rem;overflow:hidden;
 }
-.contact-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:20px 28px;
-    border-bottom:1px solid var(--border);
-    font-family:var(--mono);
-    font-size:0.9rem;
-    flex-wrap:wrap;
-    gap:8px;
-    transition:background 0.25s ease;
+.sshconfig-head{
+    padding:12px 22px;border-bottom:1px solid var(--border);color:var(--text-dim);
+    font-size:0.72rem;letter-spacing:1px;
 }
-.contact-row:last-child{border-bottom:none;}
-.contact-row:hover{background:rgba(45,212,167,0.04);}
-.contact-row .label{color:var(--text-dim);text-transform:uppercase;font-size:0.72rem;letter-spacing:1.5px;}
-.contact-row a{color:var(--accent);text-decoration:none;}
-.contact-row a:hover{text-decoration:underline;}
-.contact-row span.val{color:var(--text-primary);}
+.host-block{padding:18px 22px;border-bottom:1px solid var(--border);transition:background 0.2s ease;}
+.host-block:last-child{border-bottom:none;}
+.host-block:hover{background:rgba(45,212,167,0.04);}
+.host-block .host-line{color:var(--blue);margin-bottom:6px;}
+.host-block .host-line .kw{color:var(--text-dim);}
+.host-block .kv{color:var(--text-secondary);padding-left:22px;}
+.host-block .kv .k{color:var(--text-dim);display:inline-block;width:130px;}
+.host-block a{color:var(--accent);text-decoration:none;}
+.host-block a:hover{text-decoration:underline;}
 
 footer{
-    background:var(--bg-elevated);
-    border-top:1px solid var(--border);
-    color:var(--text-dim);
-    text-align:center;
-    padding:34px;
-    font-family:var(--mono);
-    font-size:0.8rem;
+    background:var(--bg-elevated);border-top:1px solid var(--border);color:var(--text-dim);
+    text-align:center;padding:32px;font-family:var(--mono);font-size:0.78rem;
 }
 footer .fdot{color:var(--accent);}
 
 @media(max-width:640px){
-    .hero{padding:150px 0 70px;}
-    .terminal-body{padding:24px 18px 30px;font-size:0.82rem;}
-    .hero-name{font-size:2rem;}
-    .section-title{font-size:1.5rem;}
-    .contact-row{flex-direction:column;align-items:flex-start;}
+    .hero{padding:150px 0 60px;}
+    .terminal-body{padding:22px 16px 28px;font-size:0.78rem;}
+    .motd{font-size:0.68rem;}
+    .hero-name{font-size:1.8rem;}
+    .section-title{font-size:1.4rem;}
+    .svc-head, .svc-row{grid-template-columns:1fr 100px;padding:12px 16px;}
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -408,11 +249,11 @@ footer .fdot{color:var(--accent);}
 
 <div class="statusbar">
     <div class="container">
-        <div class="status-left">
-            <span class="dot"></span>
-            SYSTEM STATUS: <span style="color:var(--accent)">ONLINE</span>
+        <div class="status-left"><span class="dot"></span>SYSTEM STATUS: <span style="color:var(--accent)">ONLINE</span></div>
+        <div class="status-right">
+            <span>load: <span>0.14</span></span>
+            <span>uptime: <span id="uptime">00:00:00</span></span>
         </div>
-        <div class="status-right">uptime: <span id="uptime">00:00:00</span></div>
     </div>
 </div>
 
@@ -420,12 +261,19 @@ footer .fdot{color:var(--accent);}
     <div class="container">
         <div class="terminal">
             <div class="terminal-bar">
-                <span class="tdot red"></span>
-                <span class="tdot yellow"></span>
-                <span class="tdot green"></span>
-                <span class="terminal-title">samir@infra-prod: ~</span>
+                <span class="tdot red"></span><span class="tdot yellow"></span><span class="tdot green"></span>
+                <span class="terminal-title">samir@infra-prod:~$ ssh login</span>
             </div>
             <div class="terminal-body">
+<pre class="motd">Welcome to Ubuntu 24.04.2 LTS (GNU/Linux 6.8.0-45-generic x86_64)
+
+  System load:  <span class="hl">0.14</span>              Processes:           142
+  Usage of /:   <span class="hl">38.2%</span> of 512GB    Users logged in:      1
+  Memory usage: <span class="hl">27%</span>               IPv4 for eth0:   10.20.4.17
+
+  <span class="ok">142 packages can be updated. 0 require a system reboot.</span>
+
+Last login: Wed Jul 15 09:14:22 2026 from 10.20.4.1</pre>
                 <div class="line"><span class="prompt">$</span> whoami</div>
                 <h1 class="hero-name" id="heroName">Samir Limbu</h1>
                 <div class="hero-roles" id="heroRoles">
@@ -435,7 +283,7 @@ footer .fdot{color:var(--accent);}
                 </div>
                 <div class="hero-cta">
                     <a href="mailto:samir@samirlimbu.com.np" class="btn">→ Contact Me</a>
-                    <a href="#certifications" class="btn ghost">view --certifications</a>
+                    <a href="#certifications" class="btn ghost">cat certifications.log</a>
                 </div>
             </div>
         </div>
@@ -446,148 +294,189 @@ footer .fdot{color:var(--accent);}
     <div class="container reveal">
         <div class="section-tag">01 · about</div>
         <h2 class="section-title">About Me</h2>
-
         <div class="card">
-            <p>
-                Experienced System Administrator with expertise in
-                enterprise infrastructure, cloud technologies,
-                virtualization, automation, database administration,
-                and DevOps practices.
-            </p>
-            <p>
-                Currently working in the banking sector, managing
-                mission-critical systems while driving automation,
-                reliability, security, and cloud adoption initiatives.
-            </p>
+            <p>Experienced System Administrator with expertise in enterprise infrastructure, cloud technologies, virtualization, automation, database administration, and DevOps practices.</p>
+            <p>Currently working in the banking sector, managing mission-critical systems while driving automation, reliability, security, and cloud adoption initiatives.</p>
         </div>
     </div>
 </section>
 
 <section>
     <div class="container reveal">
-        <div class="section-tag">02 · skills</div>
-        <h2 class="section-title">Core Skills</h2>
+        <div class="section-tag">02 · topology</div>
+        <h2 class="section-title">Infrastructure Overview</h2>
+        <div class="section-sub">$ ansible-inventory --graph</div>
+        <div class="topology-wrap">
+            <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+                <!-- connecting lines -->
+                <path id="p1" class="topo-line" d="M350,160 C280,120 220,90 130,64"/>
+                <path id="p2" class="topo-line" d="M350,160 C440,110 500,80 570,60"/>
+                <path id="p3" class="topo-line" d="M350,160 C270,200 200,230 120,258"/>
+                <path id="p4" class="topo-line" d="M350,160 C440,205 500,235 575,260"/>
+                <path id="p5" class="topo-line" d="M350,160 L350,40"/>
 
-        <div class="skills">
-            <span class="skill">AWS</span>
-            <span class="skill">Cloud Architecture</span>
-            <span class="skill">Machine Learning</span>
-            <span class="skill">Linux Administration</span>
-            <span class="skill">RHCSA</span>
-            <span class="skill">VMware</span>
-            <span class="skill">Ansible</span>
-            <span class="skill">DevOps</span>
-            <span class="skill">Docker</span>
-            <span class="skill">CI/CD</span>
-            <span class="skill">Database Administration</span>
-            <span class="skill">SQL</span>
-            <span class="skill">Infrastructure Automation</span>
-            <span class="skill">System Monitoring</span>
-            <span class="skill">Security Hardening</span>
+                <!-- pulses -->
+                <circle class="topo-pulse" r="3"><animateMotion dur="3.2s" repeatCount="indefinite" begin="0s"><mpath href="#p1"/></animateMotion></circle>
+                <circle class="topo-pulse" r="3"><animateMotion dur="2.8s" repeatCount="indefinite" begin="0.4s"><mpath href="#p2"/></animateMotion></circle>
+                <circle class="topo-pulse" r="3"><animateMotion dur="3.4s" repeatCount="indefinite" begin="0.8s"><mpath href="#p3"/></animateMotion></circle>
+                <circle class="topo-pulse" r="3"><animateMotion dur="3s" repeatCount="indefinite" begin="1.2s"><mpath href="#p4"/></animateMotion></circle>
+                <circle class="topo-pulse" r="3"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0.2s"><mpath href="#p5"/></animateMotion></circle>
+
+                <!-- center node: Ansible control -->
+                <g class="topo-node topo-center">
+                    <circle cx="350" cy="160" r="34"/>
+                    <text x="350" y="157" text-anchor="middle" class="topo-node-label" style="fill:var(--accent)">Ansible</text>
+                    <text x="350" y="170" text-anchor="middle" class="topo-node-sub">control node</text>
+                </g>
+
+                <!-- CI/CD -->
+                <g class="topo-node">
+                    <circle class="topo-node-circle" cx="350" cy="40" r="26"/>
+                    <text x="350" y="37" text-anchor="middle" class="topo-node-label">CI/CD</text>
+                    <text x="350" y="49" text-anchor="middle" class="topo-node-sub">pipeline</text>
+                </g>
+
+                <!-- On-prem -->
+                <g class="topo-node">
+                    <circle class="topo-node-circle" cx="105" cy="60" r="26"/>
+                    <text x="105" y="57" text-anchor="middle" class="topo-node-label">On-Prem</text>
+                    <text x="105" y="69" text-anchor="middle" class="topo-node-sub">bare metal</text>
+                </g>
+
+                <!-- AWS Cloud -->
+                <g class="topo-node">
+                    <circle class="topo-node-circle" cx="600" cy="55" r="26"/>
+                    <text x="600" y="52" text-anchor="middle" class="topo-node-label">AWS VPC</text>
+                    <text x="600" y="64" text-anchor="middle" class="topo-node-sub">EC2 / RDS / S3</text>
+                </g>
+
+                <!-- Database -->
+                <g class="topo-node">
+                    <circle class="topo-node-circle" cx="95" cy="272" r="26"/>
+                    <text x="95" y="269" text-anchor="middle" class="topo-node-label">Database</text>
+                    <text x="95" y="281" text-anchor="middle" class="topo-node-sub">SQL cluster</text>
+                </g>
+
+                <!-- Monitoring -->
+                <g class="topo-node">
+                    <circle class="topo-node-circle" cx="600" cy="278" r="26"/>
+                    <text x="600" y="275" text-anchor="middle" class="topo-node-label">Monitoring</text>
+                    <text x="600" y="287" text-anchor="middle" class="topo-node-sub">alerts / logs</text>
+                </g>
+            </svg>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container reveal">
+        <div class="section-tag">03 · skills</div>
+        <h2 class="section-title">Core Skills</h2>
+        <div class="section-sub">$ systemctl list-units --type=skill --state=active</div>
+        <div class="svc-table">
+            <div class="svc-head"><span>UNIT</span><span>STATE</span></div>
+            <div class="svc-row"><span class="unit">aws.service</span><span class="svc-status">active (running)</span></div>
+            <div class="svc-row"><span class="unit">cloud-architecture.service</span><span class="svc-status">active (running)</span></div>
+            <div class="svc-row"><span class="unit">machine-learning.service</span><span class="svc-status">active (running)</span></div>
+            <div class="svc-row"><span class="unit">linux-administration.service</span><span class="svc-status">active (running)</span></div>
+            <div class="svc-row"><span class="unit">rhcsa.service</span><span class="svc-status">active (running)</span></div>
+            <div class="svc-row"><span class="unit">vmware.service</span><span class="svc-status">active (running)</span></div>
+            <div class="svc-row"><span class="unit">ansible.service</span><span class="svc-status">active (running)</span></div>
+            <div class="svc-row"><span class="unit">devops.service</span><span class="svc-status">active (running)</span></div>
+            <div class="svc-row"><span class="unit">docker.service</span><span class="svc-status">active (running)</span></div>
+            <div class="svc-row"><span class="unit">ci-cd.service</span><span class="svc-status">active (running)</span></div>
+            <div class="svc-row"><span class="unit">database-administration.service</span><span class="svc-status">active (running)</span></div>
+            <div class="svc-row"><span class="unit">sql.service</span><span class="svc-status">active (running)</span></div>
+            <div class="svc-row"><span class="unit">infra-automation.service</span><span class="svc-status">active (running)</span></div>
+            <div class="svc-row"><span class="unit">system-monitoring.service</span><span class="svc-status">active (running)</span></div>
+            <div class="svc-row"><span class="unit">security-hardening.service</span><span class="svc-status">active (running)</span></div>
         </div>
     </div>
 </section>
 
 <section id="certifications">
     <div class="container reveal">
-        <div class="section-tag">03 · certifications</div>
+        <div class="section-tag">04 · certifications</div>
         <h2 class="section-title">Certifications</h2>
-
+        <div class="section-sub">$ cat certifications.log</div>
         <div class="cert-grid">
-            <div class="cert">
-                <span class="cert-badge">Verified</span>
-                <h3>AWS Certified Solutions Architect</h3>
-                <p>Amazon Web Services</p>
-            </div>
-            <div class="cert">
-                <span class="cert-badge">Verified</span>
-                <h3>AWS Machine Learning Associate</h3>
-                <p>Amazon Web Services</p>
-            </div>
-            <div class="cert">
-                <span class="cert-badge">Verified</span>
-                <h3>RHCSA</h3>
-                <p>Red Hat Certified System Administrator</p>
-            </div>
+            <div class="cert"><span class="cert-badge">verified</span><h3>AWS Certified Solutions Architect</h3><p>Amazon Web Services</p></div>
+            <div class="cert"><span class="cert-badge">verified</span><h3>AWS Machine Learning Associate</h3><p>Amazon Web Services</p></div>
+            <div class="cert"><span class="cert-badge">verified</span><h3>RHCSA</h3><p>Red Hat Certified System Administrator</p></div>
         </div>
     </div>
 </section>
 
 <section>
     <div class="container reveal">
-        <div class="section-tag">04 · focus</div>
+        <div class="section-tag">05 · focus</div>
         <h2 class="section-title">Professional Focus</h2>
-
-        <ul class="focus-list">
-            <li>Cloud Infrastructure Design &amp; Migration</li>
-            <li>Linux &amp; Enterprise Server Administration</li>
-            <li>Infrastructure Automation with Ansible</li>
-            <li>DevOps &amp; CI/CD Implementation</li>
-            <li>Database Administration &amp; Development</li>
-            <li>Virtualization using VMware</li>
-            <li>Monitoring, Security &amp; Reliability Engineering</li>
-        </ul>
+        <div class="section-sub">$ ps aux | grep samir</div>
+        <div class="ps-table">
+            <table>
+                <thead><tr><th>USER</th><th>PID</th><th>STATE</th><th>COMMAND</th></tr></thead>
+                <tbody>
+                    <tr><td class="ps-pid">samir</td><td class="ps-pid">1001</td><td class="ps-state">RUNNING</td><td class="ps-cmd">cloud-infrastructure-design-and-migration</td></tr>
+                    <tr><td class="ps-pid">samir</td><td class="ps-pid">1002</td><td class="ps-state">RUNNING</td><td class="ps-cmd">linux-enterprise-server-administration</td></tr>
+                    <tr><td class="ps-pid">samir</td><td class="ps-pid">1003</td><td class="ps-state">RUNNING</td><td class="ps-cmd">infrastructure-automation --tool=ansible</td></tr>
+                    <tr><td class="ps-pid">samir</td><td class="ps-pid">1004</td><td class="ps-state">RUNNING</td><td class="ps-cmd">devops-cicd-implementation</td></tr>
+                    <tr><td class="ps-pid">samir</td><td class="ps-pid">1005</td><td class="ps-state">RUNNING</td><td class="ps-cmd">database-administration-and-development</td></tr>
+                    <tr><td class="ps-pid">samir</td><td class="ps-pid">1006</td><td class="ps-state">RUNNING</td><td class="ps-cmd">virtualization --platform=vmware</td></tr>
+                    <tr><td class="ps-pid">samir</td><td class="ps-pid">1007</td><td class="ps-state">RUNNING</td><td class="ps-cmd">monitoring-security-reliability-engineering</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </section>
 
 <section>
     <div class="container reveal">
-        <div class="section-tag">05 · contact</div>
+        <div class="section-tag">06 · contact</div>
         <h2 class="section-title">Contact</h2>
-
-        <div class="contact-card">
-            <div class="contact-row">
-                <span class="label">Website</span>
-                <span class="val">samirlimbu.com.np</span>
+        <div class="section-sub">~/.ssh/config</div>
+        <div class="sshconfig">
+            <div class="sshconfig-head"># reach out via any of the hosts below</div>
+            <div class="host-block">
+                <div class="host-line"><span class="kw">Host</span> portfolio</div>
+                <div class="kv"><span class="k">Website</span>samirlimbu.com.np</div>
             </div>
-            <div class="contact-row">
-                <span class="label">LinkedIn</span>
-                <a href="https://linkedin.com/in/samir-limbu21" target="_blank" rel="noopener">linkedin.com/in/samir-limbu21</a>
+            <div class="host-block">
+                <div class="host-line"><span class="kw">Host</span> linkedin</div>
+                <div class="kv"><span class="k">URL</span><a href="https://linkedin.com/in/samir-limbu21" target="_blank" rel="noopener">linkedin.com/in/samir-limbu21</a></div>
             </div>
-            <div class="contact-row">
-                <span class="label">Email</span>
-                <a href="mailto:info@samirlimbu.com.np">info@samirlimbu.com.np</a>
+            <div class="host-block">
+                <div class="host-line"><span class="kw">Host</span> email</div>
+                <div class="kv"><span class="k">Address</span><a href="mailto:info@samirlimbu.com.np">info@samirlimbu.com.np</a></div>
             </div>
         </div>
     </div>
 </section>
 
-<footer>
-    <span class="fdot">●</span> 2026 Samir Limbu &nbsp;•&nbsp; System Administrator &nbsp;•&nbsp; Cloud &amp; DevOps Engineer
-</footer>
+<footer><span class="fdot">●</span> 2026 Samir Limbu &nbsp;•&nbsp; System Administrator &nbsp;•&nbsp; Cloud &amp; DevOps Engineer</footer>
 
 <script>
-// Live uptime counter
 (function(){
     var start = Date.now();
     var el = document.getElementById('uptime');
     function pad(n){return n.toString().padStart(2,'0');}
     function tick(){
         var diff = Math.floor((Date.now()-start)/1000);
-        var h = pad(Math.floor(diff/3600));
-        var m = pad(Math.floor((diff%3600)/60));
-        var s = pad(diff%60);
-        el.textContent = h+':'+m+':'+s;
+        el.textContent = pad(Math.floor(diff/3600))+':'+pad(Math.floor((diff%3600)/60))+':'+pad(diff%60);
     }
-    tick();
-    setInterval(tick, 1000);
+    tick(); setInterval(tick, 1000);
 })();
 
-// Hero reveal sequence
 window.addEventListener('DOMContentLoaded', function(){
-    setTimeout(function(){
-        document.getElementById('heroName').classList.add('show');
-    }, 500);
+    setTimeout(function(){ document.getElementById('heroName').classList.add('show'); }, 900);
     var roleLines = document.querySelectorAll('.hero-roles .line');
     roleLines.forEach(function(line, i){
         setTimeout(function(){
             line.style.transition = 'opacity 0.5s ease';
             line.style.opacity = 1;
-        }, 1100 + i*350);
+        }, 1500 + i*350);
     });
 });
 
-// Scroll reveal via IntersectionObserver
 var observer = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
         if(entry.isIntersecting){
@@ -597,9 +486,7 @@ var observer = new IntersectionObserver(function(entries){
     });
 }, {threshold:0.15});
 
-document.querySelectorAll('.reveal, .focus-list').forEach(function(el){
-    observer.observe(el);
-});
+document.querySelectorAll('.reveal, .ps-table').forEach(function(el){ observer.observe(el); });
 </script>
 
 </body>
