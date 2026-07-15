@@ -4,19 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Samir Limbu | System Administrator & Cloud Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+:root{
+    --bg:#0a0e13;
+    --bg-elevated:#0d131a;
+    --bg-card:#111922;
+    --border:#1d2733;
+    --border-hover:#2a3847;
+    --text-primary:#e8edf2;
+    --text-secondary:#8697a8;
+    --text-dim:#546578;
+    --accent:#2dd4a7;
+    --accent-dim:#1a8f6f;
+    --accent-glow:rgba(45,212,167,0.35);
+    --warning:#f0b429;
+    --mono:'JetBrains Mono', monospace;
+    --sans:'Inter', sans-serif;
 }
 
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html{scroll-behavior:smooth;}
+
 body{
-    font-family:Segoe UI, sans-serif;
-    background:#f8fafc;
-    color:#1e293b;
+    font-family:var(--sans);
+    background:var(--bg);
+    color:var(--text-primary);
     line-height:1.7;
+    overflow-x:hidden;
+    background-image:
+        linear-gradient(rgba(45,212,167,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(45,212,167,0.025) 1px, transparent 1px);
+    background-size:48px 48px;
 }
 
 .container{
@@ -25,102 +48,403 @@ body{
     margin:auto;
 }
 
+/* ---------- STATUS BAR ---------- */
+.statusbar{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    background:rgba(10,14,19,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+    padding:10px 0;
+    font-family:var(--mono);
+    font-size:0.78rem;
+}
+.statusbar .container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px;
+}
+.status-left{display:flex;align-items:center;gap:8px;color:var(--text-secondary);}
+.dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 8px var(--accent-glow);
+    animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{
+    0%,100%{opacity:1;transform:scale(1);}
+    50%{opacity:0.5;transform:scale(0.85);}
+}
+.status-right{color:var(--text-dim);letter-spacing:0.5px;}
+.status-right span{color:var(--accent);}
+
+/* ---------- HERO / TERMINAL ---------- */
 .hero{
-    background:linear-gradient(135deg,#0f172a,#1e293b);
-    color:white;
-    padding:100px 20px;
-    text-align:center;
+    padding:170px 0 100px;
+    position:relative;
 }
-
-.hero h1{
-    font-size:3.5rem;
+.terminal{
+    background:var(--bg-elevated);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,0.5);
+    opacity:0;
+    animation:fadeUp 0.8s ease forwards 0.1s;
 }
-
-.hero h2{
-    margin-top:15px;
-    font-size:1.2rem;
-    color:#cbd5e1;
-    font-weight:400;
+.terminal-bar{
+    background:#0f161e;
+    padding:12px 16px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    border-bottom:1px solid var(--border);
 }
+.tdot{width:11px;height:11px;border-radius:50%;}
+.tdot.red{background:#ff5f56;}
+.tdot.yellow{background:#ffbd2e;}
+.tdot.green{background:#27c93f;}
+.terminal-title{
+    margin-left:8px;
+    font-family:var(--mono);
+    font-size:0.75rem;
+    color:var(--text-dim);
+}
+.terminal-body{
+    padding:32px 28px 40px;
+    font-family:var(--mono);
+    font-size:0.95rem;
+}
+.terminal-body .line{color:var(--text-secondary);margin-bottom:6px;}
+.terminal-body .prompt{color:var(--accent);}
+.terminal-body .out{color:var(--text-dim);margin-bottom:18px;}
 
-.btn{
+.hero-name{
+    font-family:var(--mono);
+    font-size:clamp(2.2rem, 6vw, 3.6rem);
+    font-weight:800;
+    color:var(--text-primary);
+    margin:14px 0 6px;
+    letter-spacing:-1px;
+    opacity:0;
+}
+.hero-name.show{opacity:1;animation:fadeUp 0.6s ease forwards;}
+
+.hero-roles{margin-top:10px;}
+.hero-roles .line{
+    font-size:0.92rem;
+    color:var(--text-secondary);
+    opacity:0;
+}
+.cursor{
     display:inline-block;
-    margin-top:30px;
-    padding:12px 24px;
-    background:#3b82f6;
-    color:white;
+    width:9px;height:1.1em;
+    background:var(--accent);
+    vertical-align:text-bottom;
+    animation:blink 1s step-end infinite;
+    margin-left:2px;
+}
+@keyframes blink{50%{opacity:0;}}
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(14px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+.hero-cta{
+    margin-top:36px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+}
+.btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:13px 26px;
+    background:var(--accent);
+    color:#04140f;
     text-decoration:none;
-    border-radius:8px;
+    border-radius:6px;
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:0.85rem;
+    letter-spacing:0.3px;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 24px var(--accent-glow);
+}
+.btn.ghost{
+    background:transparent;
+    color:var(--text-secondary);
+    border:1px solid var(--border);
+}
+.btn.ghost:hover{
+    color:var(--text-primary);
+    border-color:var(--border-hover);
+    box-shadow:none;
 }
 
-section{
-    padding:70px 0;
+/* ---------- SECTIONS ---------- */
+section{padding:60px 0;}
+.section-tag{
+    font-family:var(--mono);
+    font-size:0.78rem;
+    color:var(--accent);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
-
+.section-tag::before{
+    content:'';
+    width:24px;height:1px;
+    background:var(--accent-dim);
+}
 .section-title{
-    font-size:2rem;
-    margin-bottom:25px;
+    font-family:var(--mono);
+    font-size:1.9rem;
+    font-weight:700;
+    margin-bottom:30px;
+    color:var(--text-primary);
 }
+
+.reveal{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.in{opacity:1;transform:translateY(0);}
 
 .card{
-    background:white;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 4px 20px rgba(0,0,0,0.08);
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    padding:30px;
+    border-radius:10px;
+    transition:border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
+.card:hover{
+    border-color:var(--border-hover);
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(0,0,0,0.35);
+}
+.card p{color:var(--text-secondary);}
+.card p + p{margin-top:14px;}
+.card strong{color:var(--text-primary);}
 
+/* ---------- SKILLS ---------- */
 .skills{
-    display:flex;
-    flex-wrap:wrap;
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(210px,1fr));
     gap:12px;
 }
-
 .skill{
-    background:#e2e8f0;
-    padding:10px 16px;
-    border-radius:30px;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    padding:14px 16px;
+    border-radius:6px;
+    font-family:var(--mono);
+    font-size:0.82rem;
+    color:var(--text-secondary);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    transition:border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+.skill::before{
+    content:'';
+    width:7px;height:7px;
+    border-radius:50%;
+    background:var(--accent-dim);
+    flex-shrink:0;
+    transition:background 0.25s ease, box-shadow 0.25s ease;
+}
+.skill:hover{
+    border-color:var(--accent-dim);
+    color:var(--text-primary);
+    transform:translateX(4px);
+}
+.skill:hover::before{
+    background:var(--accent);
+    box-shadow:0 0 8px var(--accent-glow);
 }
 
+/* ---------- CERTIFICATIONS ---------- */
 .cert-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
     gap:20px;
 }
-
 .cert{
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:26px;
+    position:relative;
+    overflow:hidden;
+    transition:border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.cert::before{
+    content:'';
+    position:absolute;
+    top:0;left:0;right:0;
+    height:2px;
+    background:linear-gradient(90deg, var(--accent), transparent);
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform 0.4s ease;
+}
+.cert:hover{
+    border-color:var(--border-hover);
+    transform:translateY(-4px);
+    box-shadow:0 16px 36px rgba(0,0,0,0.4);
+}
+.cert:hover::before{transform:scaleX(1);}
+.cert-badge{
+    font-family:var(--mono);
+    font-size:0.68rem;
+    color:var(--warning);
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    margin-bottom:10px;
+    display:block;
+}
+.cert h3{
+    font-size:1.05rem;
+    color:var(--text-primary);
+    margin-bottom:6px;
+}
+.cert p{color:var(--text-dim);font-size:0.88rem;}
+
+/* ---------- FOCUS LIST ---------- */
+.focus-list{
+    list-style:none;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+}
+.focus-list li{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:18px 26px;
+    border-bottom:1px solid var(--border);
+    font-family:var(--mono);
+    font-size:0.9rem;
+    color:var(--text-secondary);
+    opacity:0;
+    transform:translateX(-16px);
+    transition:opacity 0.5s ease, transform 0.5s ease, background 0.25s ease, color 0.25s ease;
+}
+.focus-list.in li{opacity:1;transform:translateX(0);}
+.focus-list li:last-child{border-bottom:none;}
+.focus-list li:hover{background:rgba(45,212,167,0.04);color:var(--text-primary);}
+.focus-list li::before{
+    content:'✓';
+    color:var(--accent);
+    font-weight:700;
+    flex-shrink:0;
 }
 
+/* ---------- CONTACT ---------- */
+.contact-card{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:0;
+    overflow:hidden;
+}
+.contact-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 28px;
+    border-bottom:1px solid var(--border);
+    font-family:var(--mono);
+    font-size:0.9rem;
+    flex-wrap:wrap;
+    gap:8px;
+    transition:background 0.25s ease;
+}
+.contact-row:last-child{border-bottom:none;}
+.contact-row:hover{background:rgba(45,212,167,0.04);}
+.contact-row .label{color:var(--text-dim);text-transform:uppercase;font-size:0.72rem;letter-spacing:1.5px;}
+.contact-row a{color:var(--accent);text-decoration:none;}
+.contact-row a:hover{text-decoration:underline;}
+.contact-row span.val{color:var(--text-primary);}
+
 footer{
-    background:#0f172a;
-    color:white;
+    background:var(--bg-elevated);
+    border-top:1px solid var(--border);
+    color:var(--text-dim);
     text-align:center;
-    padding:30px;
+    padding:34px;
+    font-family:var(--mono);
+    font-size:0.8rem;
+}
+footer .fdot{color:var(--accent);}
+
+@media(max-width:640px){
+    .hero{padding:150px 0 70px;}
+    .terminal-body{padding:24px 18px 30px;font-size:0.82rem;}
+    .hero-name{font-size:2rem;}
+    .section-title{font-size:1.5rem;}
+    .contact-row{flex-direction:column;align-items:flex-start;}
+}
+
+@media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
 }
 </style>
 </head>
 <body>
 
+<div class="statusbar">
+    <div class="container">
+        <div class="status-left">
+            <span class="dot"></span>
+            SYSTEM STATUS: <span style="color:var(--accent)">ONLINE</span>
+        </div>
+        <div class="status-right">uptime: <span id="uptime">00:00:00</span></div>
+    </div>
+</div>
+
 <header class="hero">
     <div class="container">
-        <h1>Samir Limbu</h1>
-        <h2>
-            System Administrator<br>
-            AWS Certified Solutions Architect & Machine Learning Associate <br>
-            Red Hat Certified System Administrator
-        </h2>
-
-        <a href="mailto:samir@samirlimbu.com.np" class="btn">
-            Contact Me
-        </a>
+        <div class="terminal">
+            <div class="terminal-bar">
+                <span class="tdot red"></span>
+                <span class="tdot yellow"></span>
+                <span class="tdot green"></span>
+                <span class="terminal-title">samir@infra-prod: ~</span>
+            </div>
+            <div class="terminal-body">
+                <div class="line"><span class="prompt">$</span> whoami</div>
+                <h1 class="hero-name" id="heroName">Samir Limbu</h1>
+                <div class="hero-roles" id="heroRoles">
+                    <div class="line">System Administrator</div>
+                    <div class="line">AWS Certified Solutions Architect &amp; Machine Learning Associate</div>
+                    <div class="line">Red Hat Certified System Administrator<span class="cursor"></span></div>
+                </div>
+                <div class="hero-cta">
+                    <a href="mailto:samir@samirlimbu.com.np" class="btn">→ Contact Me</a>
+                    <a href="#certifications" class="btn ghost">view --certifications</a>
+                </div>
+            </div>
+        </div>
     </div>
 </header>
 
 <section>
-    <div class="container">
+    <div class="container reveal">
+        <div class="section-tag">01 · about</div>
         <h2 class="section-title">About Me</h2>
 
         <div class="card">
@@ -130,9 +454,6 @@ footer{
                 virtualization, automation, database administration,
                 and DevOps practices.
             </p>
-
-            <br>
-
             <p>
                 Currently working in the banking sector, managing
                 mission-critical systems while driving automation,
@@ -143,7 +464,8 @@ footer{
 </section>
 
 <section>
-    <div class="container">
+    <div class="container reveal">
+        <div class="section-tag">02 · skills</div>
         <h2 class="section-title">Core Skills</h2>
 
         <div class="skills">
@@ -166,64 +488,119 @@ footer{
     </div>
 </section>
 
-<section>
-    <div class="container">
+<section id="certifications">
+    <div class="container reveal">
+        <div class="section-tag">03 · certifications</div>
         <h2 class="section-title">Certifications</h2>
 
         <div class="cert-grid">
-
             <div class="cert">
+                <span class="cert-badge">Verified</span>
                 <h3>AWS Certified Solutions Architect</h3>
                 <p>Amazon Web Services</p>
             </div>
-
             <div class="cert">
+                <span class="cert-badge">Verified</span>
                 <h3>AWS Machine Learning Associate</h3>
                 <p>Amazon Web Services</p>
             </div>
-
             <div class="cert">
+                <span class="cert-badge">Verified</span>
                 <h3>RHCSA</h3>
                 <p>Red Hat Certified System Administrator</p>
             </div>
-
         </div>
     </div>
 </section>
 
 <section>
-    <div class="container">
+    <div class="container reveal">
+        <div class="section-tag">04 · focus</div>
         <h2 class="section-title">Professional Focus</h2>
 
-        <div class="card">
-            <ul>
-                <li>Cloud Infrastructure Design & Migration</li>
-                <li>Linux & Enterprise Server Administration</li>
-                <li>Infrastructure Automation with Ansible</li>
-                <li>DevOps & CI/CD Implementation</li>
-                <li>Database Administration & Development</li>
-                <li>Virtualization using VMware</li>
-                <li>Monitoring, Security & Reliability Engineering</li>
-            </ul>
-        </div>
+        <ul class="focus-list">
+            <li>Cloud Infrastructure Design &amp; Migration</li>
+            <li>Linux &amp; Enterprise Server Administration</li>
+            <li>Infrastructure Automation with Ansible</li>
+            <li>DevOps &amp; CI/CD Implementation</li>
+            <li>Database Administration &amp; Development</li>
+            <li>Virtualization using VMware</li>
+            <li>Monitoring, Security &amp; Reliability Engineering</li>
+        </ul>
     </div>
 </section>
 
 <section>
-    <div class="container">
+    <div class="container reveal">
+        <div class="section-tag">05 · contact</div>
         <h2 class="section-title">Contact</h2>
 
-        <div class="card">
-            <p><strong>Website:</strong> samirlimbu.com.np</p>
-            <p><strong>LinkedIn:</strong> linkedin.com/in/samir-limbu21</p>
-            <p><strong>Email:</strong> info@samirlimbu.com.np</p>
+        <div class="contact-card">
+            <div class="contact-row">
+                <span class="label">Website</span>
+                <span class="val">samirlimbu.com.np</span>
+            </div>
+            <div class="contact-row">
+                <span class="label">LinkedIn</span>
+                <a href="https://linkedin.com/in/samir-limbu21" target="_blank" rel="noopener">linkedin.com/in/samir-limbu21</a>
+            </div>
+            <div class="contact-row">
+                <span class="label">Email</span>
+                <a href="mailto:info@samirlimbu.com.np">info@samirlimbu.com.np</a>
+            </div>
         </div>
     </div>
 </section>
 
 <footer>
-    © 2026 Samir Limbu • System Administrator • Cloud & DevOps Engineer
+    <span class="fdot">●</span> 2026 Samir Limbu &nbsp;•&nbsp; System Administrator &nbsp;•&nbsp; Cloud &amp; DevOps Engineer
 </footer>
+
+<script>
+// Live uptime counter
+(function(){
+    var start = Date.now();
+    var el = document.getElementById('uptime');
+    function pad(n){return n.toString().padStart(2,'0');}
+    function tick(){
+        var diff = Math.floor((Date.now()-start)/1000);
+        var h = pad(Math.floor(diff/3600));
+        var m = pad(Math.floor((diff%3600)/60));
+        var s = pad(diff%60);
+        el.textContent = h+':'+m+':'+s;
+    }
+    tick();
+    setInterval(tick, 1000);
+})();
+
+// Hero reveal sequence
+window.addEventListener('DOMContentLoaded', function(){
+    setTimeout(function(){
+        document.getElementById('heroName').classList.add('show');
+    }, 500);
+    var roleLines = document.querySelectorAll('.hero-roles .line');
+    roleLines.forEach(function(line, i){
+        setTimeout(function(){
+            line.style.transition = 'opacity 0.5s ease';
+            line.style.opacity = 1;
+        }, 1100 + i*350);
+    });
+});
+
+// Scroll reveal via IntersectionObserver
+var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+        if(entry.isIntersecting){
+            entry.target.classList.add('in');
+            observer.unobserve(entry.target);
+        }
+    });
+}, {threshold:0.15});
+
+document.querySelectorAll('.reveal, .focus-list').forEach(function(el){
+    observer.observe(el);
+});
+</script>
 
 </body>
 </html>
