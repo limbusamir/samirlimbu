@@ -23,8 +23,30 @@
     --accent-glow:rgba(45,212,167,0.35);
     --warning:#f0b429;
     --blue:#4f9df2;
+    --grid-line:rgba(45,212,167,0.025);
+    --statusbar-bg:rgba(10,14,19,0.85);
+    --shadow-color:rgba(0,0,0,0.4);
     --mono:'JetBrains Mono', monospace;
     --sans:'Inter', sans-serif;
+}
+
+html[data-theme="light"]{
+    --bg:#f4f7fb;
+    --bg-elevated:#ffffff;
+    --bg-card:#ffffff;
+    --border:#dde3ee;
+    --border-hover:#c2cee0;
+    --text-primary:#141c27;
+    --text-secondary:#4c5a6e;
+    --text-dim:#8492a6;
+    --accent:#059669;
+    --accent-dim:#0d9488;
+    --accent-glow:rgba(5,150,105,0.22);
+    --warning:#c2610a;
+    --blue:#4338ca;
+    --grid-line:rgba(67,56,202,0.045);
+    --statusbar-bg:rgba(255,255,255,0.85);
+    --shadow-color:rgba(30,41,59,0.1);
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -37,9 +59,10 @@ body{
     line-height:1.7;
     overflow-x:hidden;
     background-image:
-        linear-gradient(rgba(45,212,167,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(45,212,167,0.025) 1px, transparent 1px);
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size:48px 48px;
+    transition:background-color 0.35s ease, color 0.35s ease;
 }
 
 .container{width:90%;max-width:1100px;margin:auto;}
@@ -47,20 +70,37 @@ body{
 /* ---------- STATUS BAR ---------- */
 .statusbar{
     position:fixed;top:0;left:0;right:0;z-index:100;
-    background:rgba(10,14,19,0.85);
+    background:var(--statusbar-bg);
     backdrop-filter:blur(10px);
     border-bottom:1px solid var(--border);
     padding:10px 0;
     font-family:var(--mono);
     font-size:0.78rem;
+    transition:background-color 0.35s ease;
 }
 .statusbar .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
 .status-left{display:flex;align-items:center;gap:8px;color:var(--text-secondary);}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent-glow);animation:pulse 2s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.85);}}
-.status-right{color:var(--text-dim);letter-spacing:0.5px;display:flex;gap:18px;}
+.status-right{color:var(--text-dim);letter-spacing:0.5px;display:flex;align-items:center;gap:18px;}
 .status-right span{color:var(--accent);}
-@media(max-width:640px){.status-right{display:none;}}
+@media(max-width:640px){.status-right .metrics{display:none;}}
+
+.theme-toggle{
+    display:flex;align-items:center;gap:7px;
+    background:transparent;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:5px 12px;
+    font-family:var(--mono);
+    font-size:0.72rem;
+    color:var(--text-secondary);
+    cursor:pointer;
+    transition:border-color 0.25s ease, color 0.25s ease, transform 0.15s ease;
+}
+.theme-toggle:hover{border-color:var(--border-hover);color:var(--text-primary);}
+.theme-toggle:active{transform:scale(0.96);}
+.theme-toggle .icon{font-size:0.85rem;line-height:1;}
 
 /* ---------- HERO / TERMINAL ---------- */
 .hero{padding:170px 0 90px;position:relative;}
@@ -124,7 +164,7 @@ section{padding:56px 0;}
     background:var(--bg-card);border:1px solid var(--border);padding:30px;border-radius:10px;
     transition:border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
-.card:hover{border-color:var(--border-hover);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,0.35);}
+.card:hover{border-color:var(--border-hover);transform:translateY(-3px);box-shadow:0 12px 30px var(--shadow-color);}
 .card p{color:var(--text-secondary);}
 .card p + p{margin-top:14px;}
 .card strong{color:var(--text-primary);}
@@ -177,7 +217,7 @@ section{padding:56px 0;}
     background:linear-gradient(90deg, var(--accent), transparent);
     transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease;
 }
-.cert:hover{border-color:var(--border-hover);transform:translateY(-4px);box-shadow:0 16px 36px rgba(0,0,0,0.4);}
+.cert:hover{border-color:var(--border-hover);transform:translateY(-4px);box-shadow:0 16px 36px var(--shadow-color);}
 .cert:hover::before{transform:scaleX(1);}
 .cert-badge{
     font-family:var(--mono);font-size:0.68rem;color:var(--warning);letter-spacing:1.5px;
@@ -251,8 +291,11 @@ footer .fdot{color:var(--accent);}
     <div class="container">
         <div class="status-left"><span class="dot"></span>SYSTEM STATUS: <span style="color:var(--accent)">ONLINE</span></div>
         <div class="status-right">
-            <span>load: <span>0.14</span></span>
-            <span>uptime: <span id="uptime">00:00:00</span></span>
+            <span class="metrics">load: <span>0.14</span></span>
+            <span class="metrics">uptime: <span id="uptime">00:00:00</span></span>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark theme" title="Toggle theme">
+                <span class="icon" id="themeIcon">🌙</span><span id="themeLabel">dark</span>
+            </button>
         </div>
     </div>
 </div>
@@ -455,6 +498,25 @@ Last login: Wed Jul 15 09:14:22 2026 from 10.20.4.1</pre>
 <footer><span class="fdot">●</span> 2026 Samir Limbu &nbsp;•&nbsp; System Administrator &nbsp;•&nbsp; Cloud &amp; DevOps Engineer</footer>
 
 <script>
+(function(){
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    var icon = document.getElementById('themeIcon');
+    var label = document.getElementById('themeLabel');
+    btn.addEventListener('click', function(){
+        var isLight = root.getAttribute('data-theme') === 'light';
+        if(isLight){
+            root.removeAttribute('data-theme');
+            icon.textContent = '🌙';
+            label.textContent = 'dark';
+        } else {
+            root.setAttribute('data-theme', 'light');
+            icon.textContent = '☀️';
+            label.textContent = 'light';
+        }
+    });
+})();
+
 (function(){
     var start = Date.now();
     var el = document.getElementById('uptime');
